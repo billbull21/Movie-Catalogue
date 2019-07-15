@@ -1,4 +1,4 @@
-package com.learnque.my.moviecatalogue;
+package com.learnque.my.moviecatalogue.view.ui;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.learnque.my.moviecatalogue.R;
+import com.learnque.my.moviecatalogue.view.adapter.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

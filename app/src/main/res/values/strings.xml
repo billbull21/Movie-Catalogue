@@ -4,4 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="favorite">favorite</string>
+    <string name="buy">BUY</string>
+    <string name="close">Close</string>
+    <string name="see_poster">See Poster</string>
 </resources>

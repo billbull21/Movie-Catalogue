@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#212121"
-    tools:context=".TVShowFragment">
+    tools:context=".view.ui.TVShowFragment">
 
     <ProgressBar
         android:id="@+id/progressBar"

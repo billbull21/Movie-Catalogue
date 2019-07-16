@@ -33,6 +33,11 @@ public class MovieTvAdapter extends RecyclerView.Adapter<MovieTvAdapter.MovieTvV
         return data;
     }
 
+    public void clearData() {
+        this.data.clear();
+        notifyDataSetChanged();
+    }
+
     public void setData(ArrayList<MovieTv> data) {
         this.data = data;
         notifyDataSetChanged();

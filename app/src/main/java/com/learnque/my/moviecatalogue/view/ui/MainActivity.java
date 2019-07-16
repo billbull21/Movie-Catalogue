@@ -42,15 +42,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_fav_menu, menu);
+        getMenuInflater().inflate(R.menu.fav_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.add_fav) {
-            Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
-            startActivity(intent);
+        switch (item.getItemId()) {
+            case R.id.add_fav:
+                Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            case R.id.settings:
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

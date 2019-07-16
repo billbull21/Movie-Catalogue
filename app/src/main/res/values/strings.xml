@@ -8,4 +8,6 @@
     <string name="close">Close</string>
     <string name="see_poster">See Poster</string>
     <string name="cari">Cari</string>
+    <string name="home">home</string>
+    <string name="settings">settings</string>
 </resources>

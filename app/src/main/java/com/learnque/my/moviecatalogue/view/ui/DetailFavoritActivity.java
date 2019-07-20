@@ -1,6 +1,6 @@
 package com.learnque.my.moviecatalogue.view.ui;
 
-import android.support.design.widget.Snackbar;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,19 +20,19 @@ import com.learnque.my.moviecatalogue.service.db.MovieHelper;
 import com.learnque.my.moviecatalogue.service.db.TvHelper;
 import com.learnque.my.moviecatalogue.service.entity.FavoriteMovie;
 import com.learnque.my.moviecatalogue.service.entity.FavoriteTv;
-import com.learnque.my.moviecatalogue.service.model.MovieTv;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailFavoritActivity extends AppCompatActivity {
 
-    private String dataTitle, dataOver, dataPoster, dataPopularity, dataRating, type;
-    private Toolbar toolbar;
+    private String dataTitle, dataOver, dataPoster, dataPopuler, dataRating, type;
     private TextView title, desc, popularity, rating;
+    private boolean state = false;
     private ImageView poster;
-    private int dataId;
-    private ProgressBar progressBar;
+    private Toolbar toolbar;
     private Button button;
+    private int position, dataId;
 
-    private MovieTv dataparcel;
+    public static final int REQUEST_DELETE = 500;
+    public static final int RESULT_DELETE = 404;
 
     private MovieHelper movieHelper;
     private FavoriteMovie favoriteMovie;
@@ -43,7 +42,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_detail_favorit);
 
         //connect to xml view
         poster = findViewById(R.id.posterView);
@@ -51,30 +50,43 @@ public class DetailActivity extends AppCompatActivity {
         desc = findViewById(R.id.descView);
         popularity = findViewById(R.id.popularity);
         rating = findViewById(R.id.rating);
-        button = findViewById(R.id.btnBuy);
-
-        //get type
-        type = getIntent().getStringExtra("type");
 
         //don't forget to do this :)
+        movieHelper = MovieHelper.getInstance(getApplicationContext());
+        tvHelper = TvHelper.getInstance(getApplicationContext());
+        favoriteMovie = new FavoriteMovie();
+        favoriteTv = new FavoriteTv();
+
+        // get data from ...
+        type = getIntent().getStringExtra("type");
+
+        //parcelable
         if (type.equals("movie")) {
-            movieHelper = MovieHelper.getInstance(getApplicationContext());
-            favoriteMovie = new FavoriteMovie();
+            FavoriteMovie dataParcel = getIntent().getParcelableExtra("data");
+            //insert into variable
+            //dataId = dataParcel.getMovieId(); // i don't know why this variable has 0 value
+            dataId = getIntent().getIntExtra("movie_index", 0); //so, i used this to get movie_id.
+            dataTitle = dataParcel.getTitle();
+            dataOver = dataParcel.getOverview();
+            dataPoster = dataParcel.getPoster();
+            dataPopuler = dataParcel.getPopularity();
+            dataRating = dataParcel.getRating();
         } else if (type.equals("tv")) {
-            tvHelper = TvHelper.getInstance(getApplicationContext());
-            favoriteTv = new FavoriteTv();
+            FavoriteTv dataParcel = getIntent().getParcelableExtra("data");
+            //insert into variable
+            //dataId = dataParcel.getTvId(); //also this.
+            dataId = getIntent().getIntExtra("tv_index", 0); //dicoding reviewer. please, tell me the problem of this issue.
+            dataTitle = dataParcel.getTitle();
+            dataOver = dataParcel.getOverview();
+            dataPoster = dataParcel.getPoster();
+            dataPopuler = dataParcel.getPopularity();
+            dataRating = dataParcel.getRating();
         }
 
-        dataparcel = getIntent().getParcelableExtra("data");
+        showParcelableData();
 
-        dataId = dataparcel.getId();
-        dataTitle = dataparcel.getTitle();
-        dataOver = dataparcel.getOverview();
-        dataPoster = dataparcel.getPoster();
-        dataPopularity = dataparcel.getPopularity();
-        dataRating = dataparcel.getRating();
-        bindParcelableData();
-
+        // button to show poster
+        button = findViewById(R.id.btnBuy);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,37 +106,44 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(dataTitle);
+
+        position = getIntent().getIntExtra("position", 0);
+        Toast.makeText(this, ""+dataId, Toast.LENGTH_SHORT).show();
     }
 
-    void bindParcelableData() {
-        title.setText(dataTitle);
-        desc.setText(dataOver);
+    private void showParcelableData() {
         Glide.with(this)
                 .load(dataPoster)
                 .apply(new RequestOptions().override(100, 150))
                 .into(poster);
-        String popular = "Popularity : "+dataPopularity;
-        String vote = "Overal Rating : "+dataRating;
-        popularity.setText(popular);
-        rating.setText(vote);
+        title.setText(dataTitle);
+        desc.setText(dataOver);
+        String pops = String.format(getResources().getString(R.string.pops), dataPopuler);
+        String rat = String.format(getResources().getString(R.string.rating), dataRating);
+        popularity.setText(pops);
+        rating.setText(rat);
 
-        //for sqlite
+        //insert for SQLite
         if (type.equals("movie")) {
             favoriteMovie.setMovieId(dataId);
             favoriteMovie.setTitle(dataTitle);
             favoriteMovie.setOverview(dataOver);
             favoriteMovie.setPoster(dataPoster);
-            favoriteMovie.setPopularity(dataPopularity);
+            favoriteMovie.setPopularity(dataPopuler);
             favoriteMovie.setRating(dataRating);
         } else if (type.equals("tv")) {
             favoriteTv.setTvId(dataId);
             favoriteTv.setTitle(dataTitle);
             favoriteTv.setOverview(dataOver);
             favoriteTv.setPoster(dataPoster);
-            favoriteTv.setPopularity(dataPopularity);
+            favoriteTv.setPopularity(dataPopuler);
             favoriteTv.setRating(dataRating);
         }
     }
+
+    /**
+     * Menu is right here
+     */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -150,8 +169,12 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent();
+        intent.putExtra("index", position);
         switch (item.getItemId()) {
             case android.R.id.home:
+                if (state)
+                    setResult(RESULT_DELETE, intent);
                 onBackPressed();
                 return true;
             case R.id.add_fav:
@@ -162,6 +185,7 @@ public class DetailActivity extends AppCompatActivity {
                         if (delResult > 0) {
                             Toast.makeText(this, String.format(getResources().getString(R.string.fav_success_remove), dataTitle), Toast.LENGTH_LONG).show();
                             item.setIcon(R.drawable.ic_favorite_false);
+                            state = true;
                         }
                     } else {
                         long result = movieHelper.addFavorit(favoriteMovie);
@@ -169,6 +193,7 @@ public class DetailActivity extends AppCompatActivity {
                             favoriteMovie.setId((int) result);
                             Toast.makeText(this, String.format(getResources().getString(R.string.fav_success_add)), Toast.LENGTH_LONG).show();
                             item.setIcon(R.drawable.ic_favorite_true);
+                            state = false;
                         }
                     }
                     movieHelper.close();
@@ -179,6 +204,7 @@ public class DetailActivity extends AppCompatActivity {
                         if (delResult > 0) {
                             Toast.makeText(this, String.format(getResources().getString(R.string.fav_success_remove), dataTitle), Toast.LENGTH_LONG).show();
                             item.setIcon(R.drawable.ic_favorite_false);
+                            state = true;
                         }
                     } else {
                         long result = tvHelper.addFavorit(favoriteTv);
@@ -186,6 +212,7 @@ public class DetailActivity extends AppCompatActivity {
                             favoriteTv.setId((int) result);
                             Toast.makeText(this, String.format(getResources().getString(R.string.fav_success_add)), Toast.LENGTH_LONG).show();
                             item.setIcon(R.drawable.ic_favorite_true);
+                            state = false;
                         }
                     }
                     tvHelper.close();
@@ -199,6 +226,7 @@ public class DetailActivity extends AppCompatActivity {
                         if (delResult > 0) {
                             Toast.makeText(this, String.format(getResources().getString(R.string.fav_success_remove), dataTitle), Toast.LENGTH_LONG).show();
                             item.setIcon(R.drawable.ic_favorite_false);
+                            state = true;
                         }
                     } else {
                         long result = movieHelper.addFavorit(favoriteMovie);
@@ -206,6 +234,7 @@ public class DetailActivity extends AppCompatActivity {
                             favoriteMovie.setId((int) result);
                             Toast.makeText(this, String.format(getResources().getString(R.string.fav_success_add)), Toast.LENGTH_LONG).show();
                             item.setIcon(R.drawable.ic_favorite_true);
+                            state = false;
                         }
                     }
                     movieHelper.close();
@@ -216,6 +245,7 @@ public class DetailActivity extends AppCompatActivity {
                         if (delResult > 0) {
                             Toast.makeText(this, String.format(getResources().getString(R.string.fav_success_remove), dataTitle), Toast.LENGTH_LONG).show();
                             item.setIcon(R.drawable.ic_favorite_false);
+                            state = true;
                         }
                     } else {
                         long result = tvHelper.addFavorit(favoriteTv);
@@ -223,6 +253,7 @@ public class DetailActivity extends AppCompatActivity {
                             favoriteTv.setId((int) result);
                             Toast.makeText(this, String.format(getResources().getString(R.string.fav_success_add)), Toast.LENGTH_LONG).show();
                             item.setIcon(R.drawable.ic_favorite_true);
+                            state = false;
                         }
                     }
                     tvHelper.close();
@@ -230,5 +261,14 @@ public class DetailActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("index", position);
+        if (state)
+            setResult(RESULT_DELETE, intent);
+        super.onBackPressed();
     }
 }

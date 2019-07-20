@@ -69,7 +69,7 @@ public class TVShowFragment extends Fragment {
 //            filterString = savedInstanceState.getString(TV);
 //        }
 
-        adapter = new MovieTvAdapter(getActivity().getApplicationContext());
+        adapter = new MovieTvAdapter(getActivity().getApplicationContext(), "tv");
         adapter.notifyDataSetChanged();
         recyclerView = view.findViewById(R.id.rv_tv);
         showRecylerAdapter();

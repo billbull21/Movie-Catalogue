@@ -10,4 +10,12 @@
     <string name="cari">Cari</string>
     <string name="home">home</string>
     <string name="settings">settings</string>
+    <string name="pops">Popularity : %1$s</string>
+    <string name="rating">Overal Rating : %1$s</string>
+
+    <string name="fav_success_add">Success added into favorit!</string>
+    <string name="fav_success_remove">Remove %1$s was Success!</string>
+    <string name="movie_notice">Empty, add favorite movie now!</string>
+    <string name="delete">One item was delete!</string>
+    <string name="tv_notice">Empty, add favorite tv now!</string>
 </resources>

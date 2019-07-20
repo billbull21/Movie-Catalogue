@@ -24,9 +24,11 @@ public class MovieTvAdapter extends RecyclerView.Adapter<MovieTvAdapter.MovieTvV
 
     private Context context;
     private ArrayList<MovieTv> data = new ArrayList<>();
+    private String type;
 
-    public MovieTvAdapter(Context context) {
+    public MovieTvAdapter(Context context, String type) {
         this.context = context;
+        this.type = type;
     }
 
     public ArrayList<MovieTv> getData() {
@@ -60,6 +62,7 @@ public class MovieTvAdapter extends RecyclerView.Adapter<MovieTvAdapter.MovieTvV
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailActivity.class);
                 intent.putExtra("data", getData().get(POSITION));
+                intent.putExtra("type", type);
                 intent.putExtra("index", POSITION);
                 context.startActivity(intent);
             }

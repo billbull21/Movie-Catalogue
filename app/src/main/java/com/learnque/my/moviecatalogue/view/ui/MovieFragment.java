@@ -72,7 +72,7 @@ public class MovieFragment extends Fragment {
 //            filterString = savedInstanceState.getString(KEYWORD);
 //        }
 
-        adapter = new MovieTvAdapter(getActivity().getApplicationContext());
+        adapter = new MovieTvAdapter(getActivity().getApplicationContext(), "movie");
         adapter.notifyDataSetChanged();
         recyclerView = view.findViewById(R.id.rv_movie);
         showRecylerAdapter();

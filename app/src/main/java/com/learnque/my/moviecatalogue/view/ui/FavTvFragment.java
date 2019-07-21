@@ -4,6 +4,7 @@ package com.learnque.my.moviecatalogue.view.ui;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.learnque.my.moviecatalogue.R;
 import com.learnque.my.moviecatalogue.service.entity.FavoriteTv;
+import com.learnque.my.moviecatalogue.service.helper.TvMappingHelper;
 import com.learnque.my.moviecatalogue.view.adapter.FavoriteTvAdapter;
 import com.learnque.my.moviecatalogue.viewmodel.FavoriteTvViewModel;
 

@@ -1,7 +1,18 @@
 package com.learnque.my.moviecatalogue.service.entity;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import static android.provider.BaseColumns._ID;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.OVERVIEW;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.POPULARITY;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.POSTER;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.RATING;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.TITLE;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.ID_TV;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.getColumnInt;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.getColumnString;
 
 public class FavoriteTv implements Parcelable {
     private int id, tvId;
@@ -79,6 +90,26 @@ public class FavoriteTv implements Parcelable {
     }
 
     public FavoriteTv() {
+    }
+
+    public FavoriteTv(int id, int tvId, String title, String overview, String poster, String popularity, String rating) {
+        this.id = id;
+        this.tvId = tvId;
+        this.title = title;
+        this.overview = overview;
+        this.poster = poster;
+        this.popularity = popularity;
+        this.rating = rating;
+    }
+
+    public FavoriteTv(Cursor cursor) {
+        this.id = getColumnInt(cursor, _ID);
+        this.tvId = getColumnInt(cursor, ID_TV);
+        this.title = getColumnString(cursor, TITLE);
+        this.overview = getColumnString(cursor, OVERVIEW);
+        this.poster = getColumnString(cursor, POSTER);
+        this.popularity = getColumnString(cursor, POPULARITY);
+        this.rating = getColumnString(cursor, RATING);
     }
 
     protected FavoriteTv(Parcel in) {

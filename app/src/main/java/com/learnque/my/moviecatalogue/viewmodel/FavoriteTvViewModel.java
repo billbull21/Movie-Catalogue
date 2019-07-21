@@ -4,14 +4,18 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
-import com.learnque.my.moviecatalogue.service.db.TvHelper;
 import com.learnque.my.moviecatalogue.service.entity.FavoriteTv;
+import com.learnque.my.moviecatalogue.service.helper.TvMappingHelper;
 
 import java.util.ArrayList;
 
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.CONTENT_URI_TV;
+
 public class FavoriteTvViewModel extends ViewModel {
+
     private MutableLiveData<ArrayList<FavoriteTv>> data = new MutableLiveData<>();
 
     public LiveData<ArrayList<FavoriteTv>> getData() {
@@ -20,12 +24,11 @@ public class FavoriteTvViewModel extends ViewModel {
 
     public void setData(Context context) {
         try {
-            TvHelper tvHelper = TvHelper.getInstance(context);
-            tvHelper.open();
-            data.postValue(tvHelper.getAllMovie());
-            tvHelper.close();
+            Cursor cursor = context.getContentResolver().query(CONTENT_URI_TV, null, null, null, null);
+            ArrayList<FavoriteTv> favoriteTvs = TvMappingHelper.mapCursorToArrayList(cursor);
+            data.postValue(favoriteTvs);
         } catch (Exception e) {
-            Log.d("FAIL FETCH DB", e.getMessage());
+            Log.e("FAIL FETCH DB", e.getMessage());
         }
     }
 }

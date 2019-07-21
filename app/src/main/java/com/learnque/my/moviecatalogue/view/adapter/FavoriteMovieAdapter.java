@@ -2,6 +2,7 @@ package com.learnque.my.moviecatalogue.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -19,6 +20,8 @@ import com.learnque.my.moviecatalogue.service.entity.FavoriteMovie;
 import com.learnque.my.moviecatalogue.view.ui.DetailFavoritActivity;
 
 import java.util.ArrayList;
+
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieColumns.CONTENT_URI;
 
 public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdapter.FavMovViewHolder> {
 

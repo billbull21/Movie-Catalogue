@@ -18,7 +18,7 @@ import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColum
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.POSTER;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.RATING;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.TITLE;
-import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TABLE_TV;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.TABLE_TV;
 
 public class TvHelper {
     private static final String DATABASE_TABLE_TV = TABLE_TV;
@@ -160,5 +160,37 @@ public class TvHelper {
 
     public int deleteFavorit(int id){
         return database.delete(TABLE_TV, _ID+" = '"+id+"'", null);
+    }
+
+    public Cursor queryByIdProvider(String id) {
+        return database.query(DATABASE_TABLE_TV, null
+                , _ID + " = ?"
+                , new String[]{id}
+                , null
+                , null
+                , null
+                , null);
+    }
+
+    public Cursor queryProvider() {
+        return database.query(DATABASE_TABLE_TV
+                , null
+                , null
+                , null
+                , null
+                , null
+                , _ID + " DESC");
+    }
+
+    public long insertProvider(ContentValues values) {
+        return database.insert(DATABASE_TABLE_TV, null, values);
+    }
+
+    public int updateProvider(String id, ContentValues values) {
+        return database.update(DATABASE_TABLE_TV, values, _ID + " = ?", new String[]{id});
+    }
+
+    public int deleteProvider(String id) {
+        return database.delete(DATABASE_TABLE_TV, _ID + " = ?", new String[]{id});
     }
 }

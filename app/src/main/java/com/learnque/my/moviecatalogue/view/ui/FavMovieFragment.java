@@ -4,7 +4,9 @@ package com.learnque.my.moviecatalogue.view.ui;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import com.learnque.my.moviecatalogue.R;
 import com.learnque.my.moviecatalogue.service.db.MovieHelper;
 import com.learnque.my.moviecatalogue.service.entity.FavoriteMovie;
+import com.learnque.my.moviecatalogue.service.helper.MovieMappingHelper;
 import com.learnque.my.moviecatalogue.view.adapter.FavoriteMovieAdapter;
 import com.learnque.my.moviecatalogue.viewmodel.FavoriteMovieViewModel;
 
@@ -77,7 +80,6 @@ public class FavMovieFragment extends Fragment {
                 adapter.setData(favoriteMovies);
             } else {
                 notice.setVisibility(View.VISIBLE);
-                Toast.makeText(getActivity().getApplicationContext(), "Data kosong!", Toast.LENGTH_SHORT).show();
             }
             showLoading(false);
         }

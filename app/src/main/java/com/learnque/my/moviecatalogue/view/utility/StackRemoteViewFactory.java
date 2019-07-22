@@ -35,7 +35,6 @@ public class StackRemoteViewFactory implements RemoteViewsService.RemoteViewsFac
     public void onDataSetChanged() {
         helper.open();
         mWidgetItems = helper.getAllMovie();
-        notify();
         helper.close();
     }
 

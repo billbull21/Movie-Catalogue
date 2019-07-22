@@ -25,6 +25,7 @@ import com.learnque.my.moviecatalogue.service.db.MovieHelper;
 import com.learnque.my.moviecatalogue.service.entity.FavoriteMovie;
 import com.learnque.my.moviecatalogue.service.helper.MovieMappingHelper;
 import com.learnque.my.moviecatalogue.view.adapter.FavoriteMovieAdapter;
+import com.learnque.my.moviecatalogue.view.utility.StackRemoteViewFactory;
 import com.learnque.my.moviecatalogue.viewmodel.FavoriteMovieViewModel;
 
 import java.util.ArrayList;

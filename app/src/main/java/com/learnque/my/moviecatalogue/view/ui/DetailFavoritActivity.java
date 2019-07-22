@@ -108,7 +108,6 @@ public class DetailFavoritActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(dataTitle);
 
         position = getIntent().getIntExtra("position", 0);
-        Toast.makeText(this, ""+dataId, Toast.LENGTH_SHORT).show();
     }
 
     private void showParcelableData() {

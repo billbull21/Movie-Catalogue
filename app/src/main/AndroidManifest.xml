@@ -3,8 +3,14 @@
     package="com.learnque.my.moviecatalogue">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <permission android:name="com.learnque.my.moviecatalogue.READ_DATABASE" android:protectionLevel="normal"/>
-    <permission android:name="com.learnque.my.moviecatalogue.WRITE_DATABASE" android:protectionLevel="normal"/>
+
+    <permission
+        android:name="com.learnque.my.moviecatalogue.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="com.learnque.my.moviecatalogue.WRITE_DATABASE"
+        android:protectionLevel="normal" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,7 +18,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
-        <activity android:name=".view.ui.DetailFavoritActivity"></activity>
+        <receiver android:name=".view.utility.StackViewWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/stack_view_widget_info" />
+        </receiver>
+
+        <activity android:name=".view.ui.DetailFavoritActivity" />
         <activity android:name=".view.ui.DetailActivity" />
         <activity android:name=".view.ui.FavoriteActivity" />
         <activity android:name=".view.ui.MainActivity">
@@ -22,15 +38,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name="com.learnque.my.moviecatalogue.view.utility.StackViewWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/stack_view_widget_info" />
+        </receiver>
+        <service
+            android:name="com.learnque.my.moviecatalogue.view.utility.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
         <provider
-            android:authorities="com.learnque.my.moviecatalogue"
             android:name=".service.provider.MovieProvider"
+            android:authorities="com.learnque.my.moviecatalogue"
             android:exported="true"
             android:readPermission="com.learnque.my.moviecatalogue.READ_DATABASE"
             android:writePermission="com.learnque.my.moviecatalogue.WRITE_DATABASE" />
         <provider
-            android:authorities="com.learnque.my.tvcatalogue"
             android:name=".service.provider.TvProvider"
+            android:authorities="com.learnque.my.tvcatalogue"
             android:exported="true"
             android:readPermission="com.learnque.my.moviecatalogue.READ_DATABASE"
             android:writePermission="com.learnque.my.moviecatalogue.WRITE_DATABASE" />

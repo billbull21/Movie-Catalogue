@@ -9,11 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.learnque.my.moviecatalogue.service.db.MovieHelper;
-import com.learnque.my.moviecatalogue.view.ui.FavMovieFragment;
-import com.learnque.my.moviecatalogue.view.ui.FavoriteActivity;
-import com.learnque.my.moviecatalogue.view.ui.MainActivity;
-
-import java.util.logging.Handler;
 
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.AUTHORITY;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieColumns.CONTENT_URI;

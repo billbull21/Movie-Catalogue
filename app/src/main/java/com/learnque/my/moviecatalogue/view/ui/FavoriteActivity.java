@@ -50,11 +50,13 @@ public class FavoriteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.home_menu:
-                Intent intent = new Intent(FavoriteActivity.this, MainActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();
                 return true;
             case R.id.settings:
+                Intent setting = new Intent(this, SettingActivity.class);
+                startActivity(setting);
                 return true;
         }
         return super.onOptionsItemSelected(item);

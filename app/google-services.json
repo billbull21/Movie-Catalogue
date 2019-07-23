@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "744835920021",
+    "firebase_url": "https://moviecatalogue-a4c16.firebaseio.com",
+    "project_id": "moviecatalogue-a4c16",
+    "storage_bucket": "moviecatalogue-a4c16.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744835920021:android:e552499081d8e5dc",
+        "android_client_info": {
+          "package_name": "com.learnque.my.moviecatalogue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "744835920021-1h1a8gck75m5g5n7lq0eie8k3dtvdbsf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.learnque.my.moviecatalogue",
+            "certificate_hash": "cb13f6b9cfb9ed61d8353bb6983fa33c1c8eb33f"
+          }
+        },
+        {
+          "client_id": "744835920021-guejj0kn4vhmlm6lkem1d84kegp1o5h8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ9_yPx-P5bp6ESeNV1JOf1xa_6j9N2ew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "744835920021-guejj0kn4vhmlm6lkem1d84kegp1o5h8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

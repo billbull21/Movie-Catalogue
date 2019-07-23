@@ -18,6 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
+        <activity android:name=".view.ui.SettingActivity"></activity>
+
         <receiver android:name=".view.utility.StackViewWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -38,7 +40,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name="com.learnque.my.moviecatalogue.view.utility.StackViewWidget">
+
+        <receiver android:name=".view.utility.StackViewWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -47,9 +50,11 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/stack_view_widget_info" />
         </receiver>
+
         <service
-            android:name="com.learnque.my.moviecatalogue.view.utility.StackWidgetService"
+            android:name=".view.utility.StackWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <provider
             android:name=".service.provider.MovieProvider"
             android:authorities="com.learnque.my.moviecatalogue"

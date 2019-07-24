@@ -25,6 +25,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Favorite List");
 
         viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);

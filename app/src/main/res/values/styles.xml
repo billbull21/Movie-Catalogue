@@ -14,6 +14,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:itemBackground">#424242</item>
+        <item name="android:textColorSecondary">@android:color/darker_gray</item>
     </style>
 
     <style name="DetailInfo">

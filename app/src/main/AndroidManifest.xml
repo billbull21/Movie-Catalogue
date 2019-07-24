@@ -11,6 +11,9 @@
         android:name="com.learnque.my.moviecatalogue.WRITE_DATABASE"
         android:protectionLevel="normal" />
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -67,6 +70,14 @@
             android:exported="true"
             android:readPermission="com.learnque.my.moviecatalogue.READ_DATABASE"
             android:writePermission="com.learnque.my.moviecatalogue.WRITE_DATABASE" />
+        <receiver
+            android:name=".service.alarm.DailyReminderReceiver"
+            android:enabled="true"
+            android:exported="true" />
+        <receiver
+            android:name=".service.alarm.ReleaseReminderReceiver"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

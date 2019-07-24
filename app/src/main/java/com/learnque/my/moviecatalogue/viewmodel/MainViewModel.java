@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
 import com.learnque.my.moviecatalogue.service.model.MovieTv;
-import com.learnque.my.moviecatalogue.service.repository.MovieTvApi;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 

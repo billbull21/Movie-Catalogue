@@ -3,6 +3,7 @@ package com.learnque.my.moviecatalogue.view.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,12 +23,12 @@ import java.util.ArrayList;
 
 public class MovieTvAdapter extends RecyclerView.Adapter<MovieTvAdapter.MovieTvViewHolder> {
 
-    private Context context;
+    private Fragment fragment;
     private ArrayList<MovieTv> data = new ArrayList<>();
     private String type;
 
-    public MovieTvAdapter(Context context, String type) {
-        this.context = context;
+    public MovieTvAdapter(Fragment fragment, String type) {
+        this.fragment = fragment;
         this.type = type;
     }
 
@@ -60,11 +61,11 @@ public class MovieTvAdapter extends RecyclerView.Adapter<MovieTvAdapter.MovieTvV
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, DetailActivity.class);
+                Intent intent = new Intent(fragment.getContext(), DetailActivity.class);
                 intent.putExtra("data", getData().get(POSITION));
                 intent.putExtra("type", type);
                 intent.putExtra("index", POSITION);
-                context.startActivity(intent);
+                fragment.startActivity(intent);
             }
         });
     }

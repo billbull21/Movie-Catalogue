@@ -16,14 +16,14 @@ import cz.msebera.android.httpclient.Header;
 
 public class MovieTvApi {
 
-    private static MovieTvApi movieTvApi;
-
-    public static MovieTvApi getInstance() {
-        if (movieTvApi == null) {
-            movieTvApi = new MovieTvApi();
-        }
-        return movieTvApi;
-    }
+//    private static MovieTvApi movieTvApi;
+//
+//    public static MovieTvApi getInstance() {
+//        if (movieTvApi == null) {
+//            movieTvApi = new MovieTvApi();
+//        }
+//        return movieTvApi;
+//    }
 
     public static ArrayList<MovieTv> getApiData(String type, String API_KEY) {
         final MutableLiveData<ArrayList<MovieTv>> mutableLiveData = new MutableLiveData<>();

@@ -29,10 +29,6 @@ import com.learnque.my.moviecatalogue.viewmodel.SearchViewModel;
 
 import java.util.ArrayList;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MovieFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -72,7 +68,7 @@ public class MovieFragment extends Fragment {
 //            filterString = savedInstanceState.getString(KEYWORD);
 //        }
 
-        adapter = new MovieTvAdapter(getActivity().getApplicationContext(), "movie");
+        adapter = new MovieTvAdapter(this, "movie");
         adapter.notifyDataSetChanged();
         recyclerView = view.findViewById(R.id.rv_movie);
         showRecylerAdapter();

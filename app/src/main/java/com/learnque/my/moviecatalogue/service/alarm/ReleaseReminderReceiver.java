@@ -18,27 +18,31 @@ import android.widget.Toast;
 import com.learnque.my.moviecatalogue.R;
 import com.learnque.my.moviecatalogue.service.model.MovieTv;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class ReleaseReminderReceiver extends BroadcastReceiver {
 
 
     public static final String TYPE_RELEASE = "The film That was Released Today!";
-    public static final String EXTRA_MESSAGE = "message";
     public static final String EXTRA_DATA = "extra_data";
 
     private final int ID_RELEASE_REMINDER = 201;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        ArrayList<MovieTv> dataList = intent.getParcelableArrayListExtra(EXTRA_DATA);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Date releaseDate = new Date();
+        String todayDate = simpleDateFormat.format(releaseDate);
     }
 
-    public void setReleaseAlarm(Context context, String msg, ArrayList<MovieTv> dataList) {
+    public void setReleaseAlarm(Context context, ArrayList<MovieTv> dataList) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, DailyReminderReceiver.class);
-        intent.putExtra(EXTRA_MESSAGE, msg);
         intent.putParcelableArrayListExtra(EXTRA_DATA, dataList);
 
         Calendar calendar = Calendar.getInstance();

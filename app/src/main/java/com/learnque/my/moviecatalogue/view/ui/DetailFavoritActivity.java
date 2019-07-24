@@ -23,8 +23,8 @@ import com.learnque.my.moviecatalogue.service.entity.FavoriteTv;
 
 public class DetailFavoritActivity extends AppCompatActivity {
 
-    private String dataTitle, dataOver, dataPoster, dataPopuler, dataRating, type;
-    private TextView title, desc, popularity, rating;
+    private String dataTitle, dataOver, dataPoster, dataPopuler, dataRelease, dataRating, type;
+    private TextView title, desc, release_date, popularity, rating;
     private boolean state = false;
     private ImageView poster;
     private Toolbar toolbar;
@@ -48,6 +48,7 @@ public class DetailFavoritActivity extends AppCompatActivity {
         poster = findViewById(R.id.posterView);
         title = findViewById(R.id.titleView);
         desc = findViewById(R.id.descView);
+        release_date = findViewById(R.id.release_date);
         popularity = findViewById(R.id.popularity);
         rating = findViewById(R.id.rating);
 
@@ -64,21 +65,21 @@ public class DetailFavoritActivity extends AppCompatActivity {
         if (type.equals("movie")) {
             FavoriteMovie dataParcel = getIntent().getParcelableExtra("data");
             //insert into variable
-            //dataId = dataParcel.getMovieId(); // i don't know why this variable has 0 value
-            dataId = getIntent().getIntExtra("movie_index", 0); //so, i used this to get movie_id.
+            dataId = dataParcel.getMovieId();
             dataTitle = dataParcel.getTitle();
             dataOver = dataParcel.getOverview();
             dataPoster = dataParcel.getPoster();
+            dataRelease = dataParcel.getReleaseDate();
             dataPopuler = dataParcel.getPopularity();
             dataRating = dataParcel.getRating();
         } else if (type.equals("tv")) {
             FavoriteTv dataParcel = getIntent().getParcelableExtra("data");
             //insert into variable
-            //dataId = dataParcel.getTvId(); //also this.
-            dataId = getIntent().getIntExtra("tv_index", 0); //dicoding reviewer. please, tell me the problem of this issue.
+            dataId = dataParcel.getTvId();
             dataTitle = dataParcel.getTitle();
             dataOver = dataParcel.getOverview();
             dataPoster = dataParcel.getPoster();
+            dataRelease = dataParcel.getReleaseDate();
             dataPopuler = dataParcel.getPopularity();
             dataRating = dataParcel.getRating();
         }
@@ -117,8 +118,10 @@ public class DetailFavoritActivity extends AppCompatActivity {
                 .into(poster);
         title.setText(dataTitle);
         desc.setText(dataOver);
+        String date = "Release Date : "+dataRelease;
         String pops = String.format(getResources().getString(R.string.pops), dataPopuler);
         String rat = String.format(getResources().getString(R.string.rating), dataRating);
+        release_date.setText(date);
         popularity.setText(pops);
         rating.setText(rat);
 
@@ -128,6 +131,7 @@ public class DetailFavoritActivity extends AppCompatActivity {
             favoriteMovie.setTitle(dataTitle);
             favoriteMovie.setOverview(dataOver);
             favoriteMovie.setPoster(dataPoster);
+            favoriteMovie.setReleaseDate(dataRelease);
             favoriteMovie.setPopularity(dataPopuler);
             favoriteMovie.setRating(dataRating);
         } else if (type.equals("tv")) {
@@ -135,6 +139,7 @@ public class DetailFavoritActivity extends AppCompatActivity {
             favoriteTv.setTitle(dataTitle);
             favoriteTv.setOverview(dataOver);
             favoriteTv.setPoster(dataPoster);
+            favoriteTv.setReleaseDate(dataRelease);
             favoriteTv.setPopularity(dataPopuler);
             favoriteTv.setRating(dataRating);
         }

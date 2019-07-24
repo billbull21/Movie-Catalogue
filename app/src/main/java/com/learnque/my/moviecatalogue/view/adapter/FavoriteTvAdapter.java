@@ -61,7 +61,6 @@ public class FavoriteTvAdapter extends RecyclerView.Adapter<FavoriteTvAdapter.Fa
                 Intent intent = new Intent(fragment.getContext(), DetailFavoritActivity.class);
                 intent.putExtra("type", "tv");
                 intent.putExtra("position", POSITION);
-                intent.putExtra("tv_index", getData().get(POSITION).getTvId());
                 intent.putExtra("data", getData().get(POSITION));
                 fragment.startActivityForResult(intent, DetailFavoritActivity.REQUEST_DELETE);
             }

@@ -18,6 +18,7 @@ public class DatabaseContract {
         public static final String TITLE = "TITLE";
         public static final String OVERVIEW = "OVERVIEW";
         public static final String POSTER = "POSTER";
+        public static final String RELEASE = "RELEASE";
         public static final String POPULARITY = "POPULARITY";
         public static final String RATING = "RATING";
 
@@ -33,6 +34,7 @@ public class DatabaseContract {
         public static final String TITLE = "TITLE";
         public static final String OVERVIEW = "OVERVIEW";
         public static final String POSTER = "POSTER";
+        public static final String RELEASE = "RELEASE";
         public static final String POPULARITY = "POPULARITY";
         public static final String RATING = "RATING";
 

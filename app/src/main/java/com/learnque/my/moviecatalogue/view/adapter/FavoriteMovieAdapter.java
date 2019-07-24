@@ -65,7 +65,6 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
                 Intent intent = new Intent(fragment.getContext(), DetailFavoritActivity.class);
                 intent.putExtra("type", "movie");
                 intent.putExtra("position", POSITION);
-                intent.putExtra("movie_index", getData().get(POSITION).getMovieId());
                 intent.putExtra("data", getData().get(POSITION));
                 fragment.startActivityForResult(intent, DetailFavoritActivity.REQUEST_DELETE);
             }

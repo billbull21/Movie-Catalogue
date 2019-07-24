@@ -37,10 +37,13 @@ public class SearchViewModel extends ViewModel {
                         JSONObject data = list.getJSONObject(i);
                         MovieTv model = new MovieTv();
                         model.setId(data.getInt("id"));
-                        if (category.equals("movie"))
+                        if (category.equals("movie")) {
                             model.setTitle(data.getString("title"));
-                        else if (category.equals("tv"))
+                            model.setReleaseDate(data.getString("release_date"));
+                        }else if (category.equals("tv")) {
                             model.setTitle(data.getString("name"));
+                            model.setReleaseDate(data.getString("first_air_date"));
+                        }
                         model.setOverview(data.getString("overview"));
                         model.setPoster(data.getString("poster_path"));
                         model.setPopularity(String.valueOf(data.getDouble("popularity")));

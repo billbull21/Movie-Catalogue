@@ -21,6 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT NOT NULL,"+
                     " %s TEXT NOT NULL,"+
                     " %s TEXT NOT NULL,"+
+                    " %s TEXT NOT NULL,"+
                     " %s TEXT NOT NULL)",
             DatabaseContract.MovieColumns.TABLE_MOVIE,
             DatabaseContract.MovieColumns._ID,
@@ -28,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             DatabaseContract.MovieColumns.TITLE,
             DatabaseContract.MovieColumns.OVERVIEW,
             DatabaseContract.MovieColumns.POSTER,
+            DatabaseContract.MovieColumns.RELEASE,
             DatabaseContract.MovieColumns.POPULARITY,
             DatabaseContract.MovieColumns.RATING);
 
@@ -42,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT NOT NULL,"+
                     " %s TEXT NOT NULL,"+
                     " %s TEXT NOT NULL,"+
+                    " %s TEXT NOT NULL,"+
                     " %s TEXT NOT NULL)",
             DatabaseContract.TvColumns.TABLE_TV,
             DatabaseContract.TvColumns._ID,
@@ -49,6 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             DatabaseContract.TvColumns.TITLE,
             DatabaseContract.TvColumns.OVERVIEW,
             DatabaseContract.TvColumns.POSTER,
+            DatabaseContract.TvColumns.RELEASE,
             DatabaseContract.TvColumns.POPULARITY,
             DatabaseContract.TvColumns.RATING);
 

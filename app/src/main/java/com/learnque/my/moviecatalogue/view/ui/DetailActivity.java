@@ -24,9 +24,9 @@ import com.learnque.my.moviecatalogue.service.model.MovieTv;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private String dataTitle, dataOver, dataPoster, dataPopularity, dataRating, type;
+    private String dataTitle, dataOver, dataPoster, dataPopularity, dataRating, dataRelease, type;
     private Toolbar toolbar;
-    private TextView title, desc, popularity, rating;
+    private TextView title, desc, release_date, popularity, rating;
     private ImageView poster;
     private int dataId;
     private ProgressBar progressBar;
@@ -48,6 +48,7 @@ public class DetailActivity extends AppCompatActivity {
         poster = findViewById(R.id.posterView);
         title = findViewById(R.id.titleView);
         desc = findViewById(R.id.descView);
+        release_date = findViewById(R.id.release_date);
         popularity = findViewById(R.id.popularity);
         rating = findViewById(R.id.rating);
         button = findViewById(R.id.btnBuy);
@@ -70,6 +71,7 @@ public class DetailActivity extends AppCompatActivity {
         dataTitle = dataparcel.getTitle();
         dataOver = dataparcel.getOverview();
         dataPoster = dataparcel.getPoster();
+        dataRelease = dataparcel.getReleaseDate();
         dataPopularity = dataparcel.getPopularity();
         dataRating = dataparcel.getRating();
         bindParcelableData();
@@ -102,8 +104,10 @@ public class DetailActivity extends AppCompatActivity {
                 .load(dataPoster)
                 .apply(new RequestOptions().override(100, 150))
                 .into(poster);
+        String date = "Release Date : "+dataRelease;
         String popular = "Popularity : "+dataPopularity;
         String vote = "Overal Rating : "+dataRating;
+        release_date.setText(date);
         popularity.setText(popular);
         rating.setText(vote);
 
@@ -113,6 +117,7 @@ public class DetailActivity extends AppCompatActivity {
             favoriteMovie.setTitle(dataTitle);
             favoriteMovie.setOverview(dataOver);
             favoriteMovie.setPoster(dataPoster);
+            favoriteMovie.setReleaseDate(dataRelease);
             favoriteMovie.setPopularity(dataPopularity);
             favoriteMovie.setRating(dataRating);
         } else if (type.equals("tv")) {
@@ -120,6 +125,7 @@ public class DetailActivity extends AppCompatActivity {
             favoriteTv.setTitle(dataTitle);
             favoriteTv.setOverview(dataOver);
             favoriteTv.setPoster(dataPoster);
+            favoriteTv.setReleaseDate(dataRelease);
             favoriteTv.setPopularity(dataPopularity);
             favoriteTv.setRating(dataRating);
         }

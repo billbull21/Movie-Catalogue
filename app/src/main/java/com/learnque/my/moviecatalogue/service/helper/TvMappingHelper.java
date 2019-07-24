@@ -12,6 +12,7 @@ import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColum
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.POPULARITY;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.POSTER;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.RATING;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.RELEASE;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.TITLE;
 
 public class TvMappingHelper {
@@ -25,9 +26,10 @@ public class TvMappingHelper {
             String title = tvCursor.getString(tvCursor.getColumnIndexOrThrow(TITLE));
             String overview = tvCursor.getString(tvCursor.getColumnIndexOrThrow(OVERVIEW));
             String poster = tvCursor.getString(tvCursor.getColumnIndexOrThrow(POSTER));
+            String release = tvCursor.getString(tvCursor.getColumnIndexOrThrow(RELEASE));
             String popularity = tvCursor.getString(tvCursor.getColumnIndexOrThrow(POPULARITY));
             String rating = tvCursor.getString(tvCursor.getColumnIndexOrThrow(RATING));
-            tvs.add(new FavoriteTv(id, movieId, title, overview, poster, popularity, rating));
+            tvs.add(new FavoriteTv(id, movieId, title, overview, poster, release, popularity, rating));
         }
         return tvs;
     }

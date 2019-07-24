@@ -12,6 +12,7 @@ import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieCo
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieColumns.POPULARITY;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieColumns.POSTER;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieColumns.RATING;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieColumns.RELEASE;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieColumns.TITLE;
 
 public class MovieMappingHelper {
@@ -25,9 +26,10 @@ public class MovieMappingHelper {
             String title = movieCursor.getString(movieCursor.getColumnIndexOrThrow(TITLE));
             String overview = movieCursor.getString(movieCursor.getColumnIndexOrThrow(OVERVIEW));
             String poster = movieCursor.getString(movieCursor.getColumnIndexOrThrow(POSTER));
+            String release = movieCursor.getString(movieCursor.getColumnIndexOrThrow(RELEASE));
             String popularity = movieCursor.getString(movieCursor.getColumnIndexOrThrow(POPULARITY));
             String rating = movieCursor.getString(movieCursor.getColumnIndexOrThrow(RATING));
-            movies.add(new FavoriteMovie(id, movieId, title, overview, poster, popularity, rating));
+            movies.add(new FavoriteMovie(id, movieId, title, overview, poster, release, popularity, rating));
         }
         return movies;
     }

@@ -9,6 +9,7 @@ import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColum
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.POPULARITY;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.POSTER;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.RATING;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.RELEASE;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.TITLE;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.ID_TV;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.getColumnInt;
@@ -16,7 +17,7 @@ import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.getColu
 
 public class FavoriteTv implements Parcelable {
     private int id, tvId;
-    private String title, overview, poster, rating, popularity;
+    private String title, overview, poster, releaseDate, rating, popularity;
 
     public int getId() {
         return id;
@@ -74,6 +75,14 @@ public class FavoriteTv implements Parcelable {
         this.popularity = popularity;
     }
 
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -82,9 +91,11 @@ public class FavoriteTv implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
+        dest.writeInt(this.tvId);
         dest.writeString(this.title);
         dest.writeString(this.overview);
         dest.writeString(this.poster);
+        dest.writeString(this.releaseDate);
         dest.writeString(this.rating);
         dest.writeString(this.popularity);
     }
@@ -92,12 +103,13 @@ public class FavoriteTv implements Parcelable {
     public FavoriteTv() {
     }
 
-    public FavoriteTv(int id, int tvId, String title, String overview, String poster, String popularity, String rating) {
+    public FavoriteTv(int id, int tvId, String title, String overview, String poster, String release, String popularity, String rating) {
         this.id = id;
         this.tvId = tvId;
         this.title = title;
         this.overview = overview;
         this.poster = poster;
+        this.releaseDate = release;
         this.popularity = popularity;
         this.rating = rating;
     }
@@ -108,15 +120,18 @@ public class FavoriteTv implements Parcelable {
         this.title = getColumnString(cursor, TITLE);
         this.overview = getColumnString(cursor, OVERVIEW);
         this.poster = getColumnString(cursor, POSTER);
+        this.releaseDate = getColumnString(cursor, RELEASE);
         this.popularity = getColumnString(cursor, POPULARITY);
         this.rating = getColumnString(cursor, RATING);
     }
 
     protected FavoriteTv(Parcel in) {
         this.id = in.readInt();
+        this.tvId = in.readInt();
         this.title = in.readString();
         this.overview = in.readString();
         this.poster = in.readString();
+        this.releaseDate = in.readString();
         this.rating = in.readString();
         this.popularity = in.readString();
     }

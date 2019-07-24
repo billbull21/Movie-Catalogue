@@ -17,6 +17,7 @@ import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColum
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.POPULARITY;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.POSTER;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.RATING;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.RELEASE;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.TITLE;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.TvColumns.TABLE_TV;
 
@@ -79,6 +80,7 @@ public class TvHelper {
                 favoriteTV.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
                 favoriteTV.setOverview(cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)));
                 favoriteTV.setPoster(cursor.getString(cursor.getColumnIndexOrThrow(POSTER)));
+                favoriteTV.setReleaseDate(cursor.getString(cursor.getColumnIndexOrThrow(RELEASE)));
                 favoriteTV.setPopularity(cursor.getString(cursor.getColumnIndexOrThrow(POPULARITY)));
                 favoriteTV.setRating(cursor.getString(cursor.getColumnIndexOrThrow(RATING)));
 
@@ -123,6 +125,7 @@ public class TvHelper {
         args.put(TITLE, favoriteTV.getTitle());
         args.put(OVERVIEW, favoriteTV.getOverview());
         args.put(POSTER, favoriteTV.getPoster());
+        args.put(RELEASE, favoriteTV.getReleaseDate());
         args.put(POPULARITY, favoriteTV.getPopularity());
         args.put(RATING, favoriteTV.getRating());
         return database.insert(DATABASE_TABLE_TV, null, args);

@@ -17,6 +17,7 @@ import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieCo
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieColumns.POPULARITY;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieColumns.POSTER;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieColumns.RATING;
+import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieColumns.RELEASE;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieColumns.TITLE;
 import static com.learnque.my.moviecatalogue.service.db.DatabaseContract.MovieColumns.TABLE_MOVIE;
 
@@ -79,6 +80,7 @@ public class MovieHelper {
                 favoriteMovie.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
                 favoriteMovie.setOverview(cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)));
                 favoriteMovie.setPoster(cursor.getString(cursor.getColumnIndexOrThrow(POSTER)));
+                favoriteMovie.setReleaseDate(cursor.getString(cursor.getColumnIndexOrThrow(RELEASE)));
                 favoriteMovie.setPopularity(cursor.getString(cursor.getColumnIndexOrThrow(POPULARITY)));
                 favoriteMovie.setRating(cursor.getString(cursor.getColumnIndexOrThrow(RATING)));
 
@@ -123,6 +125,7 @@ public class MovieHelper {
         args.put(TITLE, favoriteMovie.getTitle());
         args.put(OVERVIEW, favoriteMovie.getOverview());
         args.put(POSTER, favoriteMovie.getPoster());
+        args.put(RELEASE, favoriteMovie.getReleaseDate());
         args.put(POPULARITY, favoriteMovie.getPopularity());
         args.put(RATING, favoriteMovie.getRating());
         return database.insert(DATABASE_TABLE_MOVIE, null, args);

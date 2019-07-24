@@ -6,7 +6,7 @@ import android.os.Parcelable;
 public class MovieTv implements Parcelable {
 
     private int id;
-    private String title, overview, poster, rating, popularity;
+    private String title, overview, poster, rating, popularity, releaseDate;
 
     public int getId() {
         return id;
@@ -56,6 +56,14 @@ public class MovieTv implements Parcelable {
         this.popularity = popularity;
     }
 
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -67,6 +75,7 @@ public class MovieTv implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.overview);
         dest.writeString(this.poster);
+        dest.writeString(this.releaseDate);
         dest.writeString(this.rating);
         dest.writeString(this.popularity);
     }
@@ -79,6 +88,7 @@ public class MovieTv implements Parcelable {
         this.title = in.readString();
         this.overview = in.readString();
         this.poster = in.readString();
+        this.releaseDate = in.readString();
         this.rating = in.readString();
         this.popularity = in.readString();
     }

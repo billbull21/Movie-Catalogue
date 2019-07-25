@@ -65,9 +65,9 @@ public class MyPreferenceFragment extends PreferenceFragmentCompat implements Sh
         if (key.equals(DAILY)) {
             dailyReceiver = new DailyReminderReceiver();
             if (daily.isChecked()) {
-                dailyReceiver.setRemindAlarm(getActivity().getApplicationContext(),"Let's See what's new today!");
+                dailyReceiver.setRemindAlarm(getContext(),"Let's See what's new today!");
             } else {
-                dailyReceiver.cancelAlarm(getActivity().getApplicationContext());
+                dailyReceiver.cancelAlarm(getContext());
             }
         }
     }

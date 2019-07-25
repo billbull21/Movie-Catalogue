@@ -17,19 +17,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.learnque.my.moviecatalogue.R;
 import com.learnque.my.moviecatalogue.service.model.MovieTv;
 import com.learnque.my.moviecatalogue.view.adapter.MovieTvAdapter;
 import com.learnque.my.moviecatalogue.viewmodel.MainViewModel;
-import com.learnque.my.moviecatalogue.viewmodel.SearchViewModel;
 
 import java.util.ArrayList;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class TVShowFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -41,7 +37,7 @@ public class TVShowFragment extends Fragment {
     private String filterString = null;
     private boolean inLoading = false;
 
-    private static final String TV = "";
+    private static final String KEYWORD = "";
 
     public TVShowFragment() {
         // Required empty public constructor
@@ -65,7 +61,7 @@ public class TVShowFragment extends Fragment {
         mainViewModel.getData().observe(this, getListData);
 
         if (savedInstanceState != null) {
-            filterString = savedInstanceState.getString(TV);
+            filterString = savedInstanceState.getString(KEYWORD);
         } else {
             mainViewModel.setData("tv", null);
         }
@@ -81,9 +77,11 @@ public class TVShowFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        if (searchView.getQuery() != null) {
-            filterString = searchView.getQuery().toString();
-            outState.putString(TV, filterString);
+        if (getUserVisibleHint()) {
+            if (searchView.getQuery() != null) {
+                filterString = searchView.getQuery().toString();
+                outState.putString(KEYWORD, filterString);
+            }
         }
         super.onSaveInstanceState(outState);
     }
@@ -114,12 +112,25 @@ public class TVShowFragment extends Fragment {
             searchView.setQuery(filterString, true);
         }
 
+        menuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                filterString = null;
+                return true;
+            }
+        });
+
         search(searchView);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void search(final SearchView searchView) {
-        searchView.setQueryHint("Find some film...");
+        searchView.setQueryHint("Find some tv show...");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -128,7 +139,12 @@ public class TVShowFragment extends Fragment {
                     mainViewModel.getData().removeObserver(getListData);
                     mainViewModel.setData("tv", query);
                     mainViewModel.getData().observe(getActivity(), getListData);
-                } else if (query.trim().isEmpty() || query.equals("")) {
+                    inLoading = true; //secara default nilai nya false, jadi setelah selesai maka akan menjadi false
+                    if (inLoading) {
+                        adapter.clearData();
+                        showLoading(true);
+                    }
+                } else if (query.trim().isEmpty()) {
                     mainViewModel.setData("tv",null);
                     showLoading(true);
                     inLoading = true; //secara default nilai nya false, jadi setelah selesai maka akan menjadi false
@@ -141,18 +157,14 @@ public class TVShowFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (!newText.isEmpty()) {
-                    //view model
-                    mainViewModel.getData().removeObserver(getListData);
-                    mainViewModel.setData("tv", newText);
-                    mainViewModel.getData().observe(getActivity(), getListData);
-                } else if (newText.trim().isEmpty() || newText.equals("")) {
+                if (newText.trim().isEmpty()) {
                     mainViewModel.setData("tv",null);
                     showLoading(true);
                     inLoading = true; //secara default nilai nya false, jadi setelah selesai maka akan menjadi false
                     if (inLoading) {
                         adapter.clearData();
                     }
+
                 }
                 return true;
             }

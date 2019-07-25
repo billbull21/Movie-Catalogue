@@ -18,14 +18,16 @@ import cz.msebera.android.httpclient.Header;
 
 public class SearchViewModel extends ViewModel {
     private MutableLiveData<ArrayList<MovieTv>> data = new MutableLiveData<>();
+    private MutableLiveData<String> query = new MutableLiveData<>();
     private static final String API_KEY = "48662cea933b55e0480a5d4d76ef7fbb";
 
     public void setData(String type, String query) {
         AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<MovieTv> listData = new ArrayList<>();
         final String category = type;
+        final String querys = query;
 
-        String url = "https://api.themoviedb.org/3/search/"+category+"?api_key="+API_KEY+"&language=en-US&query="+query;
+        String url = "https://api.themoviedb.org/3/search/"+category+"?api_key="+API_KEY+"&language=en-US&query="+querys;
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

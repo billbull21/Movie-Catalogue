@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,7 +24,6 @@ import com.learnque.my.moviecatalogue.R;
 import com.learnque.my.moviecatalogue.service.model.MovieTv;
 import com.learnque.my.moviecatalogue.view.adapter.MovieTvAdapter;
 import com.learnque.my.moviecatalogue.viewmodel.MainViewModel;
-import com.learnque.my.moviecatalogue.viewmodel.SearchViewModel;
 
 import java.util.ArrayList;
 
@@ -62,11 +60,12 @@ public class MovieFragment extends Fragment {
         //view model
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         mainViewModel.getData().observe(this, getListData);
-        mainViewModel.setData("movie");
 
-//        if (savedInstanceState != null) {
-//            filterString = savedInstanceState.getString(KEYWORD);
-//        }
+        if (savedInstanceState != null) {
+            filterString = savedInstanceState.getString(KEYWORD);
+        } else {
+            mainViewModel.setData("movie", null);
+        }
 
         adapter = new MovieTvAdapter(this, "movie");
         adapter.notifyDataSetChanged();
@@ -80,14 +79,16 @@ public class MovieFragment extends Fragment {
         showLoading(true);
     }
 
-//    @Override
-//    public void onSaveInstanceState(@NonNull Bundle outState) {
-//        if (searchView.getQuery() != null) {
-//            filterString = searchView.getQuery().toString();
-//            outState.putString(KEYWORD, filterString);
-//        }
-//        super.onSaveInstanceState(outState);
-//    }
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        if (searchView.getQuery() != null) {
+            filterString = searchView.getQuery().toString();
+            outState.putString(KEYWORD, filterString);
+        } else {
+            filterString = "";
+        }
+        super.onSaveInstanceState(outState);
+    }
 
     private void showRecylerAdapter() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
@@ -112,10 +113,10 @@ public class MovieFragment extends Fragment {
         inflater.inflate(R.menu.search_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.search);
         searchView = (SearchView) menuItem.getActionView();
-//        if (filterString != null && !filterString.trim().isEmpty()) {
-//            menuItem.expandActionView();
-//            searchView.setQuery(filterString, true);
-//        }
+        if (filterString != null && !filterString.trim().isEmpty()) {
+            menuItem.expandActionView();
+            searchView.setQuery(filterString, true);
+        }
 
         search(searchView);
         super.onCreateOptionsMenu(menu, inflater);
@@ -128,16 +129,11 @@ public class MovieFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 if (!query.isEmpty()) {
                     //view model
-                    SearchViewModel searchViewModel = ViewModelProviders.of(getActivity()).get(SearchViewModel.class);
-                    searchViewModel.getData().observe(getActivity(), new Observer<ArrayList<MovieTv>>() {
-                        @Override
-                        public void onChanged(@Nullable ArrayList<MovieTv> movieTvs) {
-                            adapter.setData(movieTvs);
-                        }
-                    });
-                    searchViewModel.setData("movie", query);
+                    mainViewModel.getData().removeObserver(getListData);
+                    mainViewModel.setData("movie", query);
+                    mainViewModel.getData().observe(getActivity(), getListData);
                 } else if (query.trim().isEmpty() || query.equals("")) {
-                    mainViewModel.setData("movie");
+                    mainViewModel.setData("movie" , null);
                     showLoading(true);
                     inLoading = true; //secara default nilai nya false, jadi setelah selesai maka akan menjadi false
                     if (inLoading) {
@@ -150,17 +146,11 @@ public class MovieFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (!newText.isEmpty()) {
-                    //view model
-                    SearchViewModel searchViewModel = ViewModelProviders.of(getActivity()).get(SearchViewModel.class);
-                    searchViewModel.getData().observe(getActivity(), new Observer<ArrayList<MovieTv>>() {
-                        @Override
-                        public void onChanged(@Nullable ArrayList<MovieTv> movieTvs) {
-                            adapter.setData(movieTvs);
-                        }
-                    });
-                    searchViewModel.setData("movie", newText);
+                    mainViewModel.getData().removeObserver(getListData);
+                    mainViewModel.setData("movie", newText);
+                    mainViewModel.getData().observe(getActivity(), getListData);
                 } else if (newText.trim().isEmpty() || newText.equals("")) {
-                    mainViewModel.setData("movie");
+                    mainViewModel.setData("movie", null);
                     showLoading(true);
                     inLoading = true; //secara default nilai nya false, jadi setelah selesai maka akan menjadi false
                     if (inLoading) {

@@ -3,6 +3,7 @@ package com.learnque.my.moviecatalogue.viewmodel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.learnque.my.moviecatalogue.service.model.MovieTv;
@@ -16,17 +17,22 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MainViewModel extends ViewModel {
+public class MainViewModel extends ViewModel{
 
     private MutableLiveData<ArrayList<MovieTv>> data = new MutableLiveData<>();
     private static final String API_KEY = "48662cea933b55e0480a5d4d76ef7fbb";
 
-    public void setData(String type) {
+    public void setData(String type, @Nullable String query) {
         AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<MovieTv> listData = new ArrayList<>();
         final String category = type;
+        String url;
 
-        String url = "https://api.themoviedb.org/3/discover/"+category+"?api_key="+API_KEY+"&language=en-US";
+        if (query == null) {
+            url = "https://api.themoviedb.org/3/discover/" + category + "?api_key=" + API_KEY + "&language=en-US";
+        } else {
+            url = "https://api.themoviedb.org/3/search/"+category+"?api_key="+API_KEY+"&language=en-US&query="+query;
+        }
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

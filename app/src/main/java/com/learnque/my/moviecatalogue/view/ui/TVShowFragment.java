@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.learnque.my.moviecatalogue.R;
 import com.learnque.my.moviecatalogue.service.model.MovieTv;

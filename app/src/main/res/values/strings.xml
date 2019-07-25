@@ -2,10 +2,7 @@
     <string name="app_name">Movie Catalogue</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="favorite">favorite</string>
-    <string name="buy">BUY</string>
-    <string name="close">Close</string>
     <string name="see_poster">See Poster</string>
     <string name="cari">Cari</string>
     <string name="home">home</string>
@@ -19,7 +16,6 @@
     <string name="delete">One item was delete!</string>
     <string name="tv_notice">Empty, add favorite tv now!</string>
     <string name="appwidget_text">FAVORITE LIST</string>
-    <string name="add_widget">Add widget</string>
     <string name="empty">EMPTY DATA</string>
     <string name="key_release">RELEASE</string>
     <string name="release_reminder_sum">Reminder showing the movie that released today</string>

@@ -84,8 +84,6 @@ public class MovieFragment extends Fragment {
                 filterString = searchView.getQuery().toString();
                 outState.putString(KEYWORD, filterString);
             }
-        } else {
-            filterString = null;
         }
         super.onSaveInstanceState(outState);
     }

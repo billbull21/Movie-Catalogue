@@ -4,17 +4,27 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.widget.Toast;
 
 import com.learnque.my.moviecatalogue.R;
 import com.learnque.my.moviecatalogue.service.alarm.DailyReminderReceiver;
+import com.learnque.my.moviecatalogue.service.alarm.ReleaseReminderReceiver;
+import com.learnque.my.moviecatalogue.service.model.MovieTv;
+import java.util.ArrayList;
 
 public class MyPreferenceFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private ReleaseReminderReceiver releaseReceiver;
     private DailyReminderReceiver dailyReceiver;
+
     private String RELEASE, DAILY;
 
     private SwitchPreference daily, release;
+
+    public static ArrayList<MovieTv> data = new ArrayList<>();
+
+    public static void setData(ArrayList<MovieTv> data) {
+        MyPreferenceFragment.data = data;
+    }
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
@@ -45,8 +55,11 @@ public class MyPreferenceFragment extends PreferenceFragmentCompat implements Sh
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(RELEASE)) {
+            releaseReceiver = new ReleaseReminderReceiver();
             if (release.isChecked()) {
-                Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
+                releaseReceiver.setReleaseAlarm(getContext());
+            } else {
+                releaseReceiver.cancelAlarm(getContext());
             }
         }
         if (key.equals(DAILY)) {

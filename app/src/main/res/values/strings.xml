@@ -23,7 +23,7 @@
     <string name="empty">EMPTY DATA</string>
     <string name="key_release">RELEASE</string>
     <string name="release_reminder_sum">Reminder showing the movie that released today</string>
-    <string name="release_reminder">RELEASE REMINDER</string>
+    <string name="release_reminder">Release Reminder</string>
     <string name="key_daily">DAILY</string>
     <string name="daily_reminder">Daily Reminder</string>
     <string name="daily_reminder_sum">Remind you for return to this app</string>

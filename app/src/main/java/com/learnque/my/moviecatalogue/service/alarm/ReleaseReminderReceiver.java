@@ -13,10 +13,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.learnque.my.moviecatalogue.R;
-import com.learnque.my.moviecatalogue.service.model.MovieTv;
+import com.learnque.my.moviecatalogue.service.model.AlarmItem;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,26 +30,63 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import cz.msebera.android.httpclient.Header;
+
 public class ReleaseReminderReceiver extends BroadcastReceiver {
 
-
     public static final String TYPE_RELEASE = "The film That was Released Today!";
-    public static final String EXTRA_DATA = "extra_data";
+    private static final String API_KEY = "48662cea933b55e0480a5d4d76ef7fbb";
 
     private final int ID_RELEASE_REMINDER = 201;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ArrayList<MovieTv> dataList = intent.getParcelableArrayListExtra(EXTRA_DATA);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        Date releaseDate = new Date();
-        String todayDate = simpleDateFormat.format(releaseDate);
+        AsyncHttpClient client = new AsyncHttpClient();
+        final Context context1 = context;
+        final ArrayList<AlarmItem> listData = new ArrayList<>();
+        Log.d("List1", String.valueOf(listData));
+
+        String url = "https://api.themoviedb.org/3/discover/movie?api_key="+API_KEY+"&language=en-US";
+        Log.d("List2", url);
+        client.get(url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+                    String result = new String(responseBody);
+                    JSONObject resps = new JSONObject(result);
+                    JSONArray list = resps.getJSONArray("results");
+                    Log.d("List", ""+list.length());
+                    for (int i = 0; i < list.length(); i++) {
+                        JSONObject data = list.getJSONObject(i);
+                        AlarmItem model = new AlarmItem();
+                        model.setId(data.getInt("id"));
+                        model.setTitle(data.getString("title"));
+                        model.setRelease(data.getString("release_date"));
+                        listData.add(model);
+                    }
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    Date releaseDate = new Date();
+                    String todayDate = simpleDateFormat.format(releaseDate);
+                    for (AlarmItem item : listData) {
+                        if (item.getRelease().equals(todayDate)) {
+                            showAlarmNotifications(context1, TYPE_RELEASE, item.getTitle(), item.getId());
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.d("REPOSITORY", e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("REPOSITORY", "GAGALLLLLLL!!!");
+            }
+        });
     }
 
-    public void setReleaseAlarm(Context context, ArrayList<MovieTv> dataList) {
+    public void setReleaseAlarm(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, DailyReminderReceiver.class);
-        intent.putParcelableArrayListExtra(EXTRA_DATA, dataList);
+        Intent intent = new Intent(context, ReleaseReminderReceiver.class);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -68,7 +111,7 @@ public class ReleaseReminderReceiver extends BroadcastReceiver {
 
     public void cancelAlarm(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, DailyReminderReceiver.class);
+        Intent intent = new Intent(context, ReleaseReminderReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_RELEASE_REMINDER, intent, 0);
         pendingIntent.cancel();
         if (alarmManager != null) {

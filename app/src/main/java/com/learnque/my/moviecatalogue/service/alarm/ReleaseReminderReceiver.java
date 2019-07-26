@@ -105,7 +105,7 @@ public class ReleaseReminderReceiver extends BroadcastReceiver {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_RELEASE_REMINDER, intent, 0);
         if (alarmManager != null) {
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000 * 24 * 60 * 60, pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000 * 24 * 60 * 60, pendingIntent);
         }
     }
 
@@ -117,7 +117,7 @@ public class ReleaseReminderReceiver extends BroadcastReceiver {
         if (alarmManager != null) {
             alarmManager.cancel(pendingIntent);
         }
-        Toast.makeText(context, "Repeating alarm dibatalkan", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Release Reminder was canceled", Toast.LENGTH_SHORT).show();
     }
 
     private void showAlarmNotifications(Context context, String title, String msg, int notifId) {

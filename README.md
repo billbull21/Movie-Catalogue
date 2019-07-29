@@ -2,8 +2,7 @@
 
 ## here is my first android project using android studio.
 
-this app is build for show a film. where the film data i get from API.
-in this app, you can save your favorite movie and get some notification.
+this application is made for film data shows. where the movie data I got from the API. in this application, you can save your favorite movies and get notifications.
 
 but, this app is only save movie **data**.
 you can't watch a trailer video or film cut scene in this app.
